@@ -123,12 +123,6 @@ function resetForm() {
   myForm.reset();
 }
 
-const palette = document.getElementById("palette");
-palette.addEventListener("click", () => {
-  const newTheme = document.body.getAttribute("data-bs-theme") === "light" ? "dark" : "light";
-  document.body.setAttribute("data-bs-theme", newTheme);
-});
-
 function setValuesForm() {
   fetch(myApiUrl, {
     headers: {

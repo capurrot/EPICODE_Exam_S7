@@ -24,16 +24,15 @@ fetch(URL, {
       //console.log(product);
       // Creo gli elementi della card dei prodotti
       const colCard = document.createElement("div");
-      colCard.classList.add("col-3");
+      colCard.classList.add("col-12", "col-md-6", "col-lg-4", "col-xl-3");
 
       const prodCard = document.createElement("div");
-      prodCard.classList.add("card", "rounded-0");
+      prodCard.classList.add("card", "rounded-0", "mb-4");
 
       const imgCard = document.createElement("img");
-      imgCard.classList.add("car-img-top", "p-4", "mx-auto");
+      imgCard.classList.add("car-img-top", "p-4", "mx-auto", "img-fluid");
       imgCard.src = product.imageUrl;
       imgCard.alt = product.name;
-      imgCard.height = 300;
 
       const prodCardBody = document.createElement("div");
       prodCardBody.classList.add("card-body");
@@ -52,7 +51,7 @@ fetch(URL, {
       const btnView = document.createElement("a");
       btnView.classList.add("info-link");
       btnView.text = "Dettaglio";
-      btnView.href = "./detail.html";
+      btnView.href = "./detail.html?prodId=" + product._id;
 
       const btnEdit = document.createElement("a");
       btnEdit.classList.add("btn", "btn-warning");
@@ -90,13 +89,3 @@ const isLoading = function (loadingState) {
     spinner.classList.add("d-none");
   }
 };
-
-// Cambio tema della pagina
-
-const palette = document.getElementById("palette");
-
-palette.addEventListener("click", () => {
-  const currentTheme = document.body.getAttribute("data-bs-theme");
-  const newTheme = currentTheme === "light" ? "dark" : "light";
-  document.body.setAttribute("data-bs-theme", newTheme);
-});

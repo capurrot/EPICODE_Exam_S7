@@ -19,7 +19,7 @@
     <title>Crudazone - Backend Page</title>
     <link rel="stylesheet" href="./assets/dist/css/style.min.css" />
   </head>
-  <body class="bg-dark-subtle" data-bs-theme="light">
+  <header class="sticky-top">
     <nav class="navbar navbar-expand-lg bg-secondary text-body-tertiary sticky-top" data-bs-theme="dark">
       <div class="container-fluid">
         <a class="navbar-brand text-light" href="#">Crudazon</a>
@@ -47,9 +47,11 @@
         </div>
       </div>
     </nav>
+  </header>
+  <body class="bg-dark-subtle" data-bs-theme="light">
     <div class="container bg-body mt-4">
       <div class="row justify-content-center">
-        <div class="col-6">
+        <div class="col-12 col-lg-6">
           <h2 class="d-inline-block my-4">Backoffice - Inserimento di un prodotto</h2>
           <h5 class="d-inline-block"></h5>
           <form>
@@ -67,6 +69,11 @@
                 required
               ></textarea>
             </div>
+            <!-- Qui per differenziare un pochino ho inserito una select che sarei andato a gestire con localstorage visto
+             che ancora la parte server non l'abbiamo implementata. 
+             
+             Putroppo non ho avuto tempo. Lo farò dopo le 5 :-)
+             -->
             <div class="mb-3">
               <label for="brand" class="form-label">Seleziona il Brand</label>
               <select class="form-select" aria-label="Default select example" id="brand" required>
@@ -105,6 +112,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="./assets/js/backend.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/backoffice.js"></script>
   </body>
 </html>
