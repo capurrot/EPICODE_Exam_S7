@@ -29,7 +29,9 @@ function setValuesForm() {
       const btnEdit = document.createElement("a");
       btnEdit.classList.add("btn", "btn-warning");
       btnEdit.text = "Modifica";
-      btnEdit.href = "./backoffice.html?prodId=" + product._id;
+      // commento temporaneamente questo codice per il test da nuovo api rest
+      //btnEdit.href = "./backoffice.html?prodId=" + product._id;
+      btnEdit.href = "./backoffice.html?prodId=" + product.id;
       divBtn.appendChild(btnEdit);
     })
     .catch((err) => {

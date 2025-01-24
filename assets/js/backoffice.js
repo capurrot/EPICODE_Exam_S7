@@ -107,7 +107,11 @@ function handleProduct() {
     })
     .then((createdProd) => {
       console.log("Prodotto creato/modificato con successo:", createdProd);
-      alert(`Prodotto con id ${createdProd._id} creato/modificato correttamente!`);
+
+      //alert(`Prodotto con id ${createdProd._id} creato/modificato correttamente!`);
+      msgSuccess.parentElement.classList.remove("d-none");
+      msgSuccess.innerText = `Prodotto con id ${createdProd.id} creato/modificato correttamente!`;
+      //alert(`Prodotto con id ${createdProd.id} creato/modificato correttamente!`);
       if (myMethod === "POST") myForm.reset();
     })
     .catch((err) => {
@@ -126,8 +130,17 @@ function deleteProduct() {
         }
       })
       .then((deletedProduct) => {
-        alert(`Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct._id}`);
-        window.location.assign("./index.html");
+        //alert(`Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct._id}`);
+
+        msgSuccess.parentElement.classList.remove("d-none");
+        msgSuccess.innerText = `Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct.id}`;
+        //alert(`Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct.id}`);
+
+        //Dopo aver dato il messaggio di conferma aspetto 2 secondi prima di passare alla pagina iniziale
+        myForm.reset();
+        setTimeout(() => {
+          window.location.assign("./index.html");
+        }, 2000);
       })
       .catch((err) => console.log(err));
   }
@@ -163,17 +176,5 @@ function setValuesForm() {
 
       generateAlert(err.message);
     })
-    .finally(() => {
-      isLoading(false);
-    });
-
-  const isLoading = function (loadingState) {
-    const spinner = document.querySelector(".spinner-border");
-
-    if (loadingState) {
-      spinner.classList.remove("d-none");
-    } else {
-      spinner.classList.add("d-none");
-    }
-  };
+    .finally(() => {});
 }
