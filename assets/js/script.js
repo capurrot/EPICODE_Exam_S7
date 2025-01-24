@@ -1,10 +1,9 @@
-// Codice per la chiamata al server per i prodotti
-
 const URL = "https://striveschool-api.herokuapp.com/api/product";
+const API_KEY =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzkzNGFkNGI3NDcwMTAwMTU4YjJhYmQiLCJpYXQiOjE3Mzc3MDYxOTYsImV4cCI6MTczODkxNTc5Nn0.V0ml8hcgSI_rL__f3qdAPH9CmSQxi6PYeeoJO3pUY7k";
 fetch(URL, {
   headers: {
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzkzNGFkNGI3NDcwMTAwMTU4YjJhYmQiLCJpYXQiOjE3Mzc3MDYxOTYsImV4cCI6MTczODkxNTc5Nn0.V0ml8hcgSI_rL__f3qdAPH9CmSQxi6PYeeoJO3pUY7k",
+    Authorization: API_KEY,
   },
 })
   .then((response) => {
@@ -58,7 +57,7 @@ fetch(URL, {
       const btnEdit = document.createElement("a");
       btnEdit.classList.add("btn", "btn-warning");
       btnEdit.text = "Modifica";
-      btnEdit.href = "./backoffice.html?";
+      btnEdit.href = "./backoffice.html?prodId=" + product._id;
 
       // Appendo gli elementi al DOM
 
