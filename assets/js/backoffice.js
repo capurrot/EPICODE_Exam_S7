@@ -1,7 +1,3 @@
-const API_KEY =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzkzNGFkNGI3NDcwMTAwMTU4YjJhYmQiLCJpYXQiOjE3Mzc3MDYxOTYsImV4cCI6MTczODkxNTc5Nn0.V0ml8hcgSI_rL__f3qdAPH9CmSQxi6PYeeoJO3pUY7k";
-let myApiUrl = "https://striveschool-api.herokuapp.com/api/product/";
-
 // Imposto le costanti necessarie per il fetch comprese di parametri per edit e delete
 const params = new URLSearchParams(window.location.search);
 let prodId = params.get("prodId");

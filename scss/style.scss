@@ -3,12 +3,21 @@
 
 body {
   font-family: "Roboto", sans-serif;
-}
-nav {
-  i {
-    cursor: pointer;
-    &:hover {
-      color: var(--bs-navbar-hover-color);
+  header {
+    nav {
+      i {
+        cursor: pointer;
+        &:hover {
+          color: var(--bs-navbar-hover-color);
+        }
+      }
+    }
+  }
+  main {
+    div.card {
+      img {
+        max-height: 250px;
+      }
     }
   }
 }
