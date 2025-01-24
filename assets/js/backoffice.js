@@ -6,12 +6,15 @@ const myForm = document.querySelector("form");
 const ctrlSx = document.getElementById("sx");
 const ctrlDx = document.getElementById("dx");
 
-const btnResetModal = document.getElementById("resetsi");
-btnResetModal.addEventListener("click", resetForm);
-const btnCloseModal = document.getElementById("resetno");
-btnCloseModal.addEventListener("click", () => {
+const btnYesModal = document.getElementById("resetsi");
+btnYesModal.addEventListener("click", resetForm);
+const btnNoModal = document.getElementById("resetno");
+btnNoModal.addEventListener("click", () => {
   bootstrap.Modal.getInstance(document.getElementById("staticBackdrop")).hide();
 });
+
+const titleModal = document.getElementById("staticBackdropLabel");
+const msgMdal = document.getElementById("nodalmessage");
 
 const titleBack = document.querySelector("h2");
 
@@ -40,6 +43,8 @@ const btnDel = document.createElement("button");
 btnDel.classList.add("btn", "btn-danger");
 btnDel.innerText = "Elimina";
 btnDel.type = "button";
+btnDel.setAttribute("data-bs-toggle", "modal");
+btnDel.setAttribute("data-bs-target", "#staticBackdrop");
 ctrlDx.appendChild(btnDel);
 
 let myMethod = prodId === null ? "POST" : "PUT";
@@ -50,7 +55,7 @@ if (!prodId) {
 } else {
   ctrlSx.removeChild(btnSave);
   ctrlDx.removeChild(btnReset);
-  btnDel.addEventListener("click", deleteProduct);
+  btnDel.addEventListener("click", verifyDelProd);
   btnEdit.addEventListener("click", handleProduct);
   titleBack.innerText = "Backoffice - Gestione di un prodotto";
   myApiUrl += prodId;
@@ -129,35 +134,44 @@ function handleProduct() {
 }
 
 function deleteProduct() {
-  const hasConfirmed = confirm("sei sicuro di voler eliminare il prodotto?");
-  if (hasConfirmed) {
-    fetch(myApiUrl, { method: "DELETE", headers: { Authorization: API_KEY } })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-      })
-      .then((deletedProduct) => {
-        //alert(`Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct._id}`);
+  //const hasConfirmed = confirm("sei sicuro di voler eliminare il prodotto?");
+  //if (hasConfirmed) {
+  fetch(myApiUrl, { method: "DELETE", headers: { Authorization: API_KEY } })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then((deletedProduct) => {
+      //alert(`Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct._id}`);
 
-        msgSuccess.parentElement.classList.remove("d-none");
-        msgSuccess.innerText = `Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct.id}`;
-        //alert(`Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct.id}`);
+      msgSuccess.parentElement.classList.remove("d-none");
+      msgSuccess.innerText = `Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct.id}`;
+      //alert(`Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct.id}`);
 
-        //Dopo aver dato il messaggio di conferma aspetto 2 secondi prima di passare alla pagina iniziale
-        myForm.reset();
-        setTimeout(() => {
-          window.location.assign("./index.html");
-        }, 2000);
-      })
-      .catch((err) => console.log(err));
-  }
+      //Dopo aver dato il messaggio di conferma aspetto 2 secondi prima di passare alla pagina iniziale
+      myForm.reset();
+      setTimeout(() => {
+        window.location.assign("./index.html");
+      }, 2000);
+    })
+    .catch((err) => console.log(err));
+  //}
 }
 
 function resetForm() {
   myForm.reset();
 }
 
+function verifyDelProd() {
+  titleModal.innerText = "Conferma eliminazione";
+  msgMdal.innerText = "Sei sicuro di voler eliminare il prodotto?";
+  btnNoModal.addEventListener("click", () => {
+    bootstrap.Modal.getInstance(document.getElementById("staticBackdrop")).hide();
+    return;
+  });
+  btnYesModal.addEventListener("click", deleteProduct);
+}
 function setValuesForm() {
   fetch(myApiUrl, {
     headers: {
