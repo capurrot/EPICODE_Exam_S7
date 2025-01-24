@@ -12000,4 +12000,14 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+nav i {
+  cursor: pointer;
+}
+nav i:hover {
+  color: var(--bs-navbar-hover-color);
 }/*# sourceMappingURL=style.css.map */

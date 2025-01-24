@@ -1,2 +1,14 @@
 @import "./partial/resets";
 @import "./partial/bootstrap-override";
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+nav {
+  i {
+    cursor: pointer;
+    &:hover {
+      color: var(--bs-navbar-hover-color);
+    }
+  }
+}
