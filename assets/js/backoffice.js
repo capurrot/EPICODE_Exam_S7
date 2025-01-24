@@ -1,10 +1,14 @@
-// Imposto le costanti necessarie per il fetch comprese di parametri per edit e delete
 const params = new URLSearchParams(window.location.search);
 let prodId = params.get("prodId");
+
 const myForm = document.querySelector("form");
+
 const ctrlSx = document.getElementById("sx");
 const ctrlDx = document.getElementById("dx");
+
 const titleBack = document.querySelector("h2");
+
+const msgSuccess = document.getElementById("msgsuccess");
 
 const btnSave = document.createElement("button");
 btnSave.classList.add("btn", "btn-success");
@@ -88,14 +92,28 @@ function handleProduct() {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error("Errore nella creazione del prodotto");
+        if (response.status === 400) {
+          throw new Error("Dati del prodotto non validi.");
+        } else if (response.status === 401) {
+          throw new Error("Non autorizzato. Verifica la tua API Key.");
+        } else if (response.status === 404) {
+          throw new Error("Prodotto non trovato.");
+        } else if (response.status === 503) {
+          throw new Error("Servizio non disponibile. Riprova più tardi.");
+        } else {
+          throw new Error(`Errore ${response.status}: ${response.statusText}`);
+        }
       }
     })
     .then((createdProd) => {
+      console.log("Prodotto creato/modificato con successo:", createdProd);
       alert(`Prodotto con id ${createdProd._id} creato/modificato correttamente!`);
       if (myMethod === "POST") myForm.reset();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.error("Errore durante l'operazione:", err);
+      alert(`Errore durante l'operazione: ${err.message}`);
+    });
 }
 
 function deleteProduct() {
