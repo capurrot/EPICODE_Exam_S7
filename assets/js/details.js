@@ -26,8 +26,7 @@ function setValuesForm() {
       document.getElementById("product-description").innerText = product.description;
       document.getElementById("product-brand").innerText = product.brand;
       document.getElementById("product-img").src = product.imageUrl;
-      document.getElementById("product-img").width = 300;
-      document.getElementById("product-img").classList.add("d-flex", "mx-auto");
+      document.getElementById("product-img").classList.add("d-flex", "mx-auto", "img-fluid", "mb-3");
       document.getElementById("product-price").innerText = product.price;
 
       const divBtn = document.getElementById("btn-edit");
