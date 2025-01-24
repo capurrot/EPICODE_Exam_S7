@@ -6,6 +6,13 @@ const myForm = document.querySelector("form");
 const ctrlSx = document.getElementById("sx");
 const ctrlDx = document.getElementById("dx");
 
+const btnResetModal = document.getElementById("resetsi");
+btnResetModal.addEventListener("click", resetForm);
+const btnCloseModal = document.getElementById("resetno");
+btnCloseModal.addEventListener("click", () => {
+  bootstrap.Modal.getInstance(document.getElementById("staticBackdrop")).hide();
+});
+
 const titleBack = document.querySelector("h2");
 
 const msgSuccess = document.getElementById("msgsuccess");
@@ -19,6 +26,8 @@ const btnReset = document.createElement("button");
 btnReset.classList.add("btn", "btn-secondary");
 btnReset.innerText = "Resetta il form";
 btnReset.type = "button";
+btnReset.setAttribute("data-bs-toggle", "modal");
+btnReset.setAttribute("data-bs-target", "#staticBackdrop");
 ctrlDx.appendChild(btnReset);
 
 const btnEdit = document.createElement("button");
@@ -38,7 +47,6 @@ if (!prodId) {
   prodId = "";
   ctrlSx.removeChild(btnEdit);
   ctrlDx.removeChild(btnDel);
-  btnReset.addEventListener("click", resetForm);
 } else {
   ctrlSx.removeChild(btnSave);
   ctrlDx.removeChild(btnReset);
