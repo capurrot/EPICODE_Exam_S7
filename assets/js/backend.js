@@ -1,9 +1,14 @@
+const API_KEY =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzkzNGFkNGI3NDcwMTAwMTU4YjJhYmQiLCJpYXQiOjE3Mzc3MDYxOTYsImV4cCI6MTczODkxNTc5Nn0.V0ml8hcgSI_rL__f3qdAPH9CmSQxi6PYeeoJO3pUY7k";
+let myApiUrl = "https://striveschool-api.herokuapp.com/api/product/";
+
 // Imposto le costanti necessarie per il fetch comprese di parametri per edit e delete
 const params = new URLSearchParams(window.location.search);
 let prodId = params.get("prodId");
 const myForm = document.querySelector("form");
 const ctrlSx = document.getElementById("sx");
 const ctrlDx = document.getElementById("dx");
+const titleBack = document.querySelector("h2");
 
 const btnSave = document.createElement("button");
 btnSave.classList.add("btn", "btn-success");
@@ -33,18 +38,17 @@ if (!prodId) {
   prodId = "";
   ctrlSx.removeChild(btnEdit);
   ctrlDx.removeChild(btnDel);
+  btnReset.addEventListener("click", resetForm);
 } else {
   ctrlSx.removeChild(btnSave);
   ctrlDx.removeChild(btnReset);
   btnDel.addEventListener("click", deleteProduct);
   btnEdit.addEventListener("click", handleProduct);
+  titleBack.innerText = "Backoffice - Gestione di un prodotto";
+  myApiUrl += prodId;
+  setValuesForm();
 }
 
-const URL = "https://striveschool-api.herokuapp.com/api/product/" + prodId;
-const API_KEY =
-  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzkzNGFkNGI3NDcwMTAwMTU4YjJhYmQiLCJpYXQiOjE3Mzc3MDYxOTYsImV4cCI6MTczODkxNTc5Nn0.V0ml8hcgSI_rL__f3qdAPH9CmSQxi6PYeeoJO3pUY7k";
-
-console.log(URL);
 class ProductObj {
   constructor(name, description, brand, imageUrl, price) {
     this.name = name;
@@ -76,7 +80,7 @@ function handleProduct() {
     myForm.elements.price.value
   );
 
-  fetch(URL, {
+  fetch(myApiUrl, {
     method: myMethod,
     body: JSON.stringify(myProduct),
     headers: {
@@ -101,7 +105,7 @@ function handleProduct() {
 function deleteProduct() {
   const hasConfirmed = confirm("sei sicuro di voler eliminare il prodotto?");
   if (hasConfirmed) {
-    fetch(URL, { method: "DELETE", headers: { Authorization: API_KEY } })
+    fetch(myApiUrl, { method: "DELETE", headers: { Authorization: API_KEY } })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -115,8 +119,53 @@ function deleteProduct() {
   }
 }
 
+function resetForm() {
+  myForm.reset();
+}
+
 const palette = document.getElementById("palette");
 palette.addEventListener("click", () => {
   const newTheme = document.body.getAttribute("data-bs-theme") === "light" ? "dark" : "light";
   document.body.setAttribute("data-bs-theme", newTheme);
 });
+
+function setValuesForm() {
+  fetch(myApiUrl, {
+    headers: {
+      Authorization: API_KEY,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Errore nel fetch dei prodotti");
+      }
+    })
+    .then((product) => {
+      console.log(product);
+      myForm.elements.name.value = product.name;
+      myForm.elements.description.value = product.description;
+      myForm.elements.brand.value = product.brand;
+      myForm.elements.imageurl.value = product.imageUrl;
+      myForm.elements.price.value = product.price;
+    })
+    .catch((err) => {
+      console.dir(err);
+
+      generateAlert(err.message);
+    })
+    .finally(() => {
+      isLoading(false);
+    });
+
+  const isLoading = function (loadingState) {
+    const spinner = document.querySelector(".spinner-border");
+
+    if (loadingState) {
+      spinner.classList.remove("d-none");
+    } else {
+      spinner.classList.add("d-none");
+    }
+  };
+}
