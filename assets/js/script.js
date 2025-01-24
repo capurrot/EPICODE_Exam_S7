@@ -15,7 +15,10 @@ palette.addEventListener("click", () => {
 let myApiUrl = "https://striveschool-api.herokuapp.com/api/product/"; */
 
 const API_KEY = "";
-let myApiUrl = "https://679404b85eae7e5c4d908da3.mockapi.io/api/v1/products/";
+let myApiUrl = "https://679404b85eae7e5c4d908da3aa.mockapi.io/api/v1/products/";
+
+const msgSuccess = document.getElementById("msgsuccess");
+const msgError = document.getElementById("msgerror");
 
 if (window.location.href.match("index.html") != null) {
   fetch(myApiUrl, {
@@ -27,7 +30,19 @@ if (window.location.href.match("index.html") != null) {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error("Errore nel fetch dei prodotti");
+        if (response.status === 400) {
+          throw new Error("400: Dati del prodotto non validi.");
+        } else if (response.status === 401) {
+          throw new Error("401: Non autorizzato. Verifica la tua API Key.");
+        } else if (response.status === 404) {
+          throw new Error("404: Prodotto non trovato.");
+        } else if (response.status === 503) {
+          throw new Error("503: Servizio non disponibile. Riprova più tardi.");
+        } else if (response.status === 500) {
+          throw new Error("500: Errore interno del server");
+        } else {
+          throw new Error(`${response.status}: ${response.statusText}`);
+        }
       }
     })
     .then((products) => {
@@ -93,9 +108,8 @@ if (window.location.href.match("index.html") != null) {
       });
     })
     .catch((err) => {
-      console.dir(err);
-
-      generateAlert(err.message);
+      msgError.parentElement.classList.remove("d-none");
+      msgError.innerText = `Errore durante l'operazione: ${err.message}`;
     })
     .finally(() => {
       isLoading(false);

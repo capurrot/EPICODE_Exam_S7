@@ -18,8 +18,6 @@ const msgMdal = document.getElementById("nodalmessage");
 
 const titleBack = document.querySelector("h2");
 
-const msgSuccess = document.getElementById("msgsuccess");
-
 const btnSave = document.createElement("button");
 btnSave.classList.add("btn", "btn-success");
 btnSave.innerText = "Salva";
@@ -120,22 +118,17 @@ function handleProduct() {
     })
     .then((createdProd) => {
       console.log("Prodotto creato/modificato con successo:", createdProd);
-
-      //alert(`Prodotto con id ${createdProd._id} creato/modificato correttamente!`);
       msgSuccess.parentElement.classList.remove("d-none");
       msgSuccess.innerText = `Prodotto con id ${createdProd.id} creato/modificato correttamente!`;
-      //alert(`Prodotto con id ${createdProd.id} creato/modificato correttamente!`);
       if (myMethod === "POST") myForm.reset();
     })
     .catch((err) => {
-      console.error("Errore durante l'operazione:", err);
-      alert(`Errore durante l'operazione: ${err.message}`);
+      msgError.parentElement.classList.remove("d-none");
+      msgError.innerText = `Errore durante l'operazione: ${err.message}`;
     });
 }
 
 function deleteProduct() {
-  //const hasConfirmed = confirm("sei sicuro di voler eliminare il prodotto?");
-  //if (hasConfirmed) {
   fetch(myApiUrl, { method: "DELETE", headers: { Authorization: API_KEY } })
     .then((response) => {
       if (response.ok) {
@@ -143,11 +136,8 @@ function deleteProduct() {
       }
     })
     .then((deletedProduct) => {
-      //alert(`Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct._id}`);
-
       msgSuccess.parentElement.classList.remove("d-none");
       msgSuccess.innerText = `Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct.id}`;
-      //alert(`Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct.id}`);
 
       //Dopo aver dato il messaggio di conferma aspetto 2 secondi prima di passare alla pagina iniziale
       myForm.reset();
@@ -155,8 +145,10 @@ function deleteProduct() {
         window.location.assign("./index.html");
       }, 2000);
     })
-    .catch((err) => console.log(err));
-  //}
+    .catch((err) => {
+      msgError.parentElement.classList.remove("d-none");
+      msgError.innerText = `Errore durante l'operazione: ${err.message}`;
+    });
 }
 
 function resetForm() {
@@ -182,7 +174,19 @@ function setValuesForm() {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error("Errore nel fetch dei prodotti");
+        if (response.status === 400) {
+          throw new Error("400: Dati del prodotto non validi.");
+        } else if (response.status === 401) {
+          throw new Error("401: Non autorizzato. Verifica la tua API Key.");
+        } else if (response.status === 404) {
+          throw new Error("404: Prodotto non trovato.");
+        } else if (response.status === 503) {
+          throw new Error("503: Servizio non disponibile. Riprova più tardi.");
+        } else if (response.status === 500) {
+          throw new Error("500: Errore interno del server");
+        } else {
+          throw new Error(`${response.status}: ${response.statusText}`);
+        }
       }
     })
     .then((product) => {
@@ -194,9 +198,7 @@ function setValuesForm() {
       myForm.elements.price.value = product.price;
     })
     .catch((err) => {
-      console.dir(err);
-
-      generateAlert(err.message);
-    })
-    .finally(() => {});
+      msgError.parentElement.classList.remove("d-none");
+      msgError.innerText = `Errore durante l'operazione: ${err.message}`;
+    });
 }

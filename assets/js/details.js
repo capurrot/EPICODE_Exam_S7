@@ -13,7 +13,19 @@ function setValuesForm() {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error("Errore nel fetch dei prodotti");
+        if (response.status === 400) {
+          throw new Error("400: Dati del prodotto non validi.");
+        } else if (response.status === 401) {
+          throw new Error("401: Non autorizzato. Verifica la tua API Key.");
+        } else if (response.status === 404) {
+          throw new Error("404: Prodotto non trovato.");
+        } else if (response.status === 503) {
+          throw new Error("503: Servizio non disponibile. Riprova più tardi.");
+        } else if (response.status === 500) {
+          throw new Error("500: Errore interno del server");
+        } else {
+          throw new Error(`${response.status}: ${response.statusText}`);
+        }
       }
     })
     .then((product) => {
@@ -35,10 +47,8 @@ function setValuesForm() {
       divBtn.appendChild(btnEdit);
     })
     .catch((err) => {
-      console.dir(err);
-
-      //generateAlert(err.message);
-    })
-    .finally(() => {});
+      msgError.parentElement.classList.remove("d-none");
+      msgError.innerText = `Errore durante l'operazione: ${err.message}`;
+    });
 }
 setValuesForm();
