@@ -80,8 +80,8 @@ if (window.location.href.match("index.html") != null) {
 
         const imgCard = document.createElement("img");
         imgCard.classList.add("car-img-top", "p-4", "mx-auto");
-        imgCard.src = "https://i.ebayimg.com/images/g/lsoAAOSw-D1eoBh4/s-l640.jpg";
-        //imgCard.src = product.imageUrl;
+        //imgCard.src = "https://i.ebayimg.com/images/g/lsoAAOSw-D1eoBh4/s-l640.jpg";
+        imgCard.src = product.imageUrl;
         imgCard.alt = product.name;
 
         const prodCardBody = document.createElement("div");
@@ -102,7 +102,7 @@ if (window.location.href.match("index.html") != null) {
         btnView.classList.add("info-link");
         btnView.text = "Dettaglio";
         // commento temporaneamente questo codice per il test da nuovo api rest
-        btnEdit.href = "./backoffice.html?prodId=" + product._id;
+        btnView.href = "./backoffice.html?prodId=" + product._id;
         //btnView.href = "./detail.html?prodId=" + product.id;
 
         const btnEdit = document.createElement("a");
@@ -126,6 +126,7 @@ if (window.location.href.match("index.html") != null) {
       });
     })
     .catch((err) => {
+      console.log(err);
       msgError.parentElement.classList.remove("d-none");
       msgError.innerText = `Errore durante l'operazione: ${err.message}`;
     })
