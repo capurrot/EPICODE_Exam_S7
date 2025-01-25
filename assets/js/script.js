@@ -102,7 +102,7 @@ if (window.location.href.match("index.html") != null) {
         btnView.classList.add("info-link");
         btnView.text = "Dettaglio";
         // commento temporaneamente questo codice per il test da nuovo api rest
-        btnView.href = "./backoffice.html?prodId=" + product._id;
+        btnView.href = "./detail.html?prodId=" + product._id;
         //btnView.href = "./detail.html?prodId=" + product.id;
 
         const btnEdit = document.createElement("a");
