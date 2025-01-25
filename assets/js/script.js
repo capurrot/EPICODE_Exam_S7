@@ -23,14 +23,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Costanti necessarie a tutte le pagine
 
-/* const API_KEY =
+const API_KEY =
   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzkzNGFkNGI3NDcwMTAwMTU4YjJhYmQiLCJpYXQiOjE3Mzc3MDYxOTYsImV4cCI6MTczODkxNTc5Nn0.V0ml8hcgSI_rL__f3qdAPH9CmSQxi6PYeeoJO3pUY7k";
-let myApiUrl = "https://striveschool-api.herokuapp.com/api/product/"; */
+let myApiUrl = "https://striveschool-api.herokuapp.com/api/product/";
 
 /* Dato che il server era caduto ho creato delle api per proseguire.
-Ho anche impostato dei messaggi di errore che escono con degli alert di Bootstrap*/
+Ho anche impostato dei messaggi di errore che escono con degli alert di Bootstrap
 const API_KEY = "";
-let myApiUrl = "https://679404b85eae7e5c4d908da3.mockapi.io/api/v1/products/";
+let myApiUrl = "https://679404b85eae7e5c4d908da3.mockapi.io/api/v1/products/";*/
 
 // Identifico dove sono i puntamenti per i messaggi di successo o errore
 const msgSuccess = document.getElementById("msgsuccess");
@@ -102,15 +102,15 @@ if (window.location.href.match("index.html") != null) {
         btnView.classList.add("info-link");
         btnView.text = "Dettaglio";
         // commento temporaneamente questo codice per il test da nuovo api rest
-        //btnEdit.href = "./backoffice.html?prodId=" + product._id;
-        btnView.href = "./detail.html?prodId=" + product.id;
+        btnEdit.href = "./backoffice.html?prodId=" + product._id;
+        //btnView.href = "./detail.html?prodId=" + product.id;
 
         const btnEdit = document.createElement("a");
         btnEdit.classList.add("btn", "btn-warning");
         btnEdit.text = "Modifica";
         // commento temporaneamente questo codice per il test da nuovo api rest
-        //btnEdit.href = "./backoffice.html?prodId=" + product._id;
-        btnEdit.href = "./backoffice.html?prodId=" + product.id;
+        btnEdit.href = "./backoffice.html?prodId=" + product._id;
+        //btnEdit.href = "./backoffice.html?prodId=" + product.id;
 
         // Appendo gli elementi al DOM
 

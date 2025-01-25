@@ -119,7 +119,7 @@ function handleProduct() {
     .then((createdProd) => {
       console.log("Prodotto creato/modificato con successo:", createdProd);
       msgSuccess.parentElement.classList.remove("d-none");
-      msgSuccess.innerText = `Prodotto con id ${createdProd.id} creato/modificato correttamente!`;
+      msgSuccess.innerText = `Prodotto con id ${createdProd._id} creato/modificato correttamente!`;
       if (myMethod === "POST") myForm.reset();
     })
     .catch((err) => {
@@ -137,7 +137,7 @@ function deleteProduct() {
     })
     .then((deletedProduct) => {
       msgSuccess.parentElement.classList.remove("d-none");
-      msgSuccess.innerText = `Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct.id}`;
+      msgSuccess.innerText = `Abbiamo eliminato ${deletedProduct.name} con id ${deletedProduct._id}`;
 
       //Dopo aver dato il messaggio di conferma aspetto 2 secondi prima di passare alla pagina iniziale
       myForm.reset();
