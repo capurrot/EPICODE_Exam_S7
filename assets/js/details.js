@@ -44,8 +44,8 @@ function setValuesForm() {
       btnEdit.classList.add("btn", "btn-warning");
       btnEdit.text = "Modifica";
       // commento temporaneamente questo codice per il test da nuovo api rest
-      //btnEdit.href = "./backoffice.html?prodId=" + product._id;
-      btnEdit.href = "./backoffice.html?prodId=" + product.id;
+      btnEdit.href = "./backoffice.html?prodId=" + product._id;
+      //btnEdit.href = "./backoffice.html?prodId=" + product.id;
       divBtn.appendChild(btnEdit);
     })
     .catch((err) => {
