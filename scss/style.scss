@@ -5,6 +5,9 @@ body {
   font-family: "Roboto", sans-serif;
   header {
     nav {
+      img {
+        width: 50px;
+      }
       i {
         cursor: pointer;
         &:hover {

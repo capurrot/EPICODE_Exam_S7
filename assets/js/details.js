@@ -2,6 +2,8 @@ const params = new URLSearchParams(window.location.search);
 let prodId = params.get("prodId");
 const nameProduct = document.getElementById("product-name");
 const description = document.getElementById("product-description");
+const brand = document.getElementById("product-brand");
+const price = document.getElementById("product-price");
 
 function setValuesForm() {
   fetch(myApiUrl + prodId, {
@@ -29,13 +31,13 @@ function setValuesForm() {
       }
     })
     .then((product) => {
+      document.getElementById("product-img").classList.add("d-flex", "mx-auto", "img-fluid", "my-3");
+      document.getElementById("product-img").src = product.imageUrl;
       nameProduct.classList.add("display-5");
       nameProduct.innerText = product.name;
-      document.getElementById("product-description").innerText = product.description;
-      document.getElementById("product-brand").innerText = product.brand;
-      document.getElementById("product-img").src = product.imageUrl;
-      document.getElementById("product-img").classList.add("d-flex", "mx-auto", "img-fluid", "mb-3");
-      document.getElementById("product-price").innerText = product.price;
+      description.innerText = product.description;
+      brand.innerText = product.brand;
+      price.innerText = product.price + " €";
 
       const divBtn = document.getElementById("btn-edit");
       const btnEdit = document.createElement("a");

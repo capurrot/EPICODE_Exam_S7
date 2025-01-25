@@ -1,11 +1,24 @@
 // Cambio tema della pagina
 
-const palette = document.getElementById("palette");
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleButton = document.getElementById("palette");
 
-palette.addEventListener("click", () => {
-  const currentTheme = document.body.getAttribute("data-bs-theme");
-  const newTheme = currentTheme === "light" ? "dark" : "light";
-  document.body.setAttribute("data-bs-theme", newTheme);
+  const myTheme = localStorage.getItem("theme");
+  if (myTheme) {
+    document.body.setAttribute("data-bs-theme", myTheme);
+  } else {
+    document.body.setAttribute("data-bs-theme", "light");
+  }
+
+  toggleButton.addEventListener("click", function () {
+    if (document.body.getAttribute("data-bs-theme") === "light") {
+      document.body.setAttribute("data-bs-theme", "dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.body.setAttribute("data-bs-theme", "light");
+      localStorage.setItem("theme", "light");
+    }
+  });
 });
 
 // Costanti necessarie a tutte le pagine
@@ -14,12 +27,16 @@ palette.addEventListener("click", () => {
   "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzkzNGFkNGI3NDcwMTAwMTU4YjJhYmQiLCJpYXQiOjE3Mzc3MDYxOTYsImV4cCI6MTczODkxNTc5Nn0.V0ml8hcgSI_rL__f3qdAPH9CmSQxi6PYeeoJO3pUY7k";
 let myApiUrl = "https://striveschool-api.herokuapp.com/api/product/"; */
 
+/* Dato che il server era caduto ho creato delle api per proseguire.
+Ho anche impostato dei messaggi di errore che escono con degli alert di Bootstrap*/
 const API_KEY = "";
-let myApiUrl = "https://679404b85eae7e5c4d908da3aa.mockapi.io/api/v1/products/";
+let myApiUrl = "https://679404b85eae7e5c4d908da3.mockapi.io/api/v1/products/";
 
+// Identifico dove sono i puntamenti per i messaggi di successo o errore
 const msgSuccess = document.getElementById("msgsuccess");
 const msgError = document.getElementById("msgerror");
 
+// Eseguo questo codice solo sulla pagina index
 if (window.location.href.match("index.html") != null) {
   fetch(myApiUrl, {
     headers: {
@@ -63,7 +80,8 @@ if (window.location.href.match("index.html") != null) {
 
         const imgCard = document.createElement("img");
         imgCard.classList.add("car-img-top", "p-4", "mx-auto");
-        imgCard.src = product.imageUrl;
+        imgCard.src = "https://i.ebayimg.com/images/g/lsoAAOSw-D1eoBh4/s-l640.jpg";
+        //imgCard.src = product.imageUrl;
         imgCard.alt = product.name;
 
         const prodCardBody = document.createElement("div");
@@ -75,7 +93,7 @@ if (window.location.href.match("index.html") != null) {
 
         const pCard = document.createElement("p");
         pCard.classList.add("card-text", "fs-4", "px-2");
-        pCard.innerText = product.price;
+        pCard.innerText = product.price + " €";
 
         const divControls = document.createElement("div");
         divControls.classList.add("d-flex", "justify-content-between", "align-items-center");

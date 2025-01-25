@@ -12004,6 +12004,9 @@ textarea.form-control-lg {
 body {
   font-family: "Roboto", sans-serif;
 }
+body header nav img {
+  width: 50px;
+}
 body header nav i {
   cursor: pointer;
 }
